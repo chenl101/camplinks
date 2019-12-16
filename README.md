@@ -84,11 +84,6 @@ In addition, this final project provides us a great opportunity to experience th
 - safely store app secrets in `.env` (nobody can see this but you and people you invite)
 
 #### Administrator view
-- Admin account:
-
-    name: admin  
-
-    password: web2560
 
 - When Logged in as admin, user can edit and delete all content of any campground in this app. 
 
