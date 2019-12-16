@@ -1,0 +1,105 @@
+<% include ../partials/header %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">CampLinks</p>
+            <div class="list-group">
+                <li class="list-group-item active">Info 1</li>
+                <li class="list-group-item">Info 2</li>
+                <li class="list-group-item">Info 3</li>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <img class="img-responsive" src="<%= campground.image %>">
+                <div class="caption-full">
+                    <h4 class="pull-right"><%= campground.price %></h4>
+                    <h4 style="color:#0693c2"><b><%=campground.name%></b></h4>
+                  
+<!--                Display Rating of  campground -->
+                    <% if(campground.rate){ %>
+                        <% for(let i=0; i<campground.rate; i++) { %>
+                            <span class="fa fa-star checked"></span>
+                        <% } %>
+                        <b><%= campground.rate %></b>
+                    <% } %>
+                  
+                    <p><%= campground.description %></p>
+                    <p><em>Submitted By <%= campground.author.username %></em></p>
+                    <% if(campground.date){ %>
+                        <p><%= campground.date.toString('dddd, MMMM ,yyyy') %></p>
+                    <% } %>
+                  
+<!--                   show geolocation of this campground in google map with a marker! -->
+                    <% if(campground.location){ %>
+                        <style>
+                           /* Set the size of the div element that contains the map */
+                          #map {
+                            height: 320px;  /* The height is 350 pixels */
+                            width: 100%;  /* The width is the width of the div */
+                           }
+                        </style>
+
+                        <!--The div element for the map -->
+                        <div id="map"></div>
+                        <!-- Replace the value of the key parameter with your own API key. -->
+                        <script>
+
+                          console.log("init map!");
+                          // Initialize and add the map
+                          function initMap() {
+                            // The location of campground
+                            var loc =  <%= campground.location %>;
+
+                            // The map, centered at campground
+                            var map = new google.maps.Map(
+                                document.getElementById('map'), {zoom: 12, center: loc});
+
+                            // The marker, positioned at Uluru
+                            var marker = new google.maps.Marker({position: loc, map: map});
+                          }
+                          console.log("init map done")
+                        </script>
+                        <!--Load the API from the specified URL
+                        * The async attribute allows the browser to render the page while the API loads
+                        * The key parameter will contain your own API key (which is not needed for this tutorial)
+                        * The callback parameter executes the initMap() function
+                        -->
+                        <script async defer
+                          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqU-hd8BcDRw6G8ke6UihDXYTVCkFlHMU&callback=initMap">
+                        </script>
+                    <% } %>
+                    <br>
+                    <% if(currentUser && campground.author.id.equals(currentUser._id)){ %>
+                        <a class="btn btn-warning" href="/campgrounds/<%= campground._id %>/edit">Edit Campground</a>
+                    <% } %>
+                </div>
+            </div>
+            <div class="well">
+                <div class="text-right">
+                    <a class="btn btn-success" href="/campgrounds/<%= campground._id %>/comments/new">Add New Comment</a>
+                </div>
+                
+                <% campground.comments.forEach(function(comment){ %>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <strong><%= comment.author.username %></strong>
+                            <span class="pull-right"><%= comment.date.toString().substring(0,24) %></span>
+                       <div>
+                           <%= comment.text %>
+
+                            <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+                                <form style="display: inline" class="pull-right" action="/campgrounds/<%=campground._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                                    <button class="btn btn-xs btn-danger">DELETE</button>
+                                    <a href="/campgrounds/<%=campground._id%>/comments/<%=comment._id%>/edit" class="btn btn-xs btn-info">EDIT</a>
+                                </form>
+                            <% } %> 
+                       </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+
+<% include ../partials/footer %>

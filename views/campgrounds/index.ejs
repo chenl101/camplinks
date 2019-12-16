@@ -1,0 +1,36 @@
+<% include ../partials/header %> 
+     
+     <link rel="stylesheet" href="stylesheets/main.css">
+     
+     <script src="scripts/campgrounds.js"></script>
+
+     <header class="jumbotron" id="billboard" style="background: https://images.unsplash.com/photo-1444012104069-996724bf4a0a?dpr=2&fit=crop&fm=jpg&h=825&ixlib=rb-0.3.5&q=50&w=1450">
+         <div class="container">
+             <h1 class="title" style="color: white"><span class="glyphicon glyphicon-tent"></span> Welcome To CampLinks!</h1>
+             <p style="color: white">View our hand-picked campgrounds from all over the world</p>
+             
+             <a class="btn btn-default btn-lg" href="/campgrounds/new">Add New Campground</a>
+             
+         </div>
+     </header>
+     
+     <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+        <% campgrounds.forEach(function(campground){ %>
+        <a href="/campgrounds/<%= campground._id %>" class="col-md-3 col-sm-6 hvr-grow">
+          <div>
+              <div class="thumbnail shadow">
+                 <img src="<%= campground.image %>" >
+                 <div class="caption">
+                     <h4><%= campground.name %></h4>
+                 </div>
+                 <p>
+
+                 </p>
+              </div>
+          </div>
+        </a>
+            
+        <% }); %>
+    </div>
+
+<% include ../partials/footer %>

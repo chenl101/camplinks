@@ -1,0 +1,30 @@
+<!-- This is a static file -->
+<!-- served from your routes in server.js -->
+
+<!-- You might want to try something fancier: -->
+<!-- html/nunjucks docs: https://mozilla.github.io/nunjucks/ -->
+<!-- pug: https://pugjs.org/ -->
+<!-- haml: http://haml.info/ -->
+<!-- hbs(handlebars): http://handlebarsjs.com/ -->
+
+<% include partials/header %>
+    <header>
+      <h1>
+        Welcome to CampLinks!
+      </h1>
+    </header>
+
+
+    <p class="bold">Oh hi,</p>
+
+    <p>Check these most popular campgrounds we picked for you!</p>
+      
+    <footer>
+      Made with <a href="https://glitch.com">Glitch</a>!
+    </footer>
+    <!-- include the Glitch button to show what the webpage is about and
+          to make it easier for folks to view source and remix -->
+    <div class="glitchButton" style="position:fixed;top:20px;right:20px;"></div>
+    <script src="https://button.glitch.me/button.js"></script>
+
+<% include partials/footer %>
